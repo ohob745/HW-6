@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:get_storage/get_storage.dart';
-import 'package:hw_6/model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hw_6/model/model.dart';
 
-import '../main.dart';
 
 class ContactInfoGetStorge {
   static const String key = 'task_managers';
@@ -14,13 +12,9 @@ class ContactInfoGetStorge {
 
   ContactInfoGetStorge() {
     getContactInfoFromList();
-    
   }
 
-
-
-
-  addContactInfoToList({required String name,required String email}) async {
+  addContactInfoToList({required String name, required String email}) async {
     ContactInfo contactInfo = ContactInfo(name: name, email: email);
     allContactInfo.add(contactInfo);
 
@@ -31,6 +25,7 @@ class ContactInfoGetStorge {
 
     await box.write("allContactInfo", jsonEncode(encodableList));
   }
+
   getContactInfoFromList() async {
     List decodableList = jsonDecode(box.read("allContactInfo"));
     for (var element in decodableList) {
@@ -38,11 +33,10 @@ class ContactInfoGetStorge {
       allContactInfo.add(contactInfo);
     }
     // print(allContactInfo);
-    return allContactInfo;}
-deleteContactInfoFromList(){
-  box.erase();
-}
-
+    return allContactInfo;
   }
 
-
+  deleteContactInfoFromList() {
+    box.erase();
+  }
+}
